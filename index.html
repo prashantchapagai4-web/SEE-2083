@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEE 2083 Science Unit 1 Mock Test</title>
+<style>
+body{font:16px system-ui;background:#f4f6fa;color:#172033;margin:0}header{background:#10213b;color:white;padding:24px}main{max-width:820px;margin:20px auto;padding:0 14px}.card{background:white;border:1px solid #ddd;border-radius:14px;padding:18px;margin:14px 0}button{background:#2458a6;color:white;border:0;border-radius:8px;padding:11px 16px;font:inherit;cursor:pointer}button:disabled{opacity:.4}label{display:block;padding:10px;border:1px solid #ddd;border-radius:8px;margin:8px 0}#count{font-size:2rem;font-weight:bold;color:#2458a6}.muted{color:#667085}.hide{display:none}.score{font-size:2rem;font-weight:bold;color:#2458a6}
+</style></head><body>
+<header><h1>SEE 2083 Saturday Mock Test</h1><p>Science — Unit 1: Scientific Learning</p></header>
+<main>
+<section class="card"><h2>Test schedule</h2><p><b>Saturday, 28 November 2026 · 11:00 AM Nepal Time</b></p><p>30 MCQs · 45 minutes</p><div id="count">Loading countdown…</div><p id="status" class="muted">The test opens at the scheduled time.</p></section>
+<section class="card" id="start"><h2>Start test</h2><input id="student" placeholder="Your name (optional)" maxlength="30"><button id="begin" disabled>Start</button><p class="muted">Your result is calculated in this browser and is not saved online.</p></section>
+<section class="card hide" id="test"><p>Time left: <b id="timer">45:00</b> · <span id="number"></span></p><h3 id="question"></h3><div id="options"></div><button id="prev">Previous</button> <button id="next">Next</button> <button id="submit">Submit test</button></section>
+<section class="card hide" id="result"><h2>Your result</h2><p id="resultname"></p><div class="score" id="score"></div><p id="percent"></p><button onclick="print()">Print result</button><div id="review"></div></section>
+<section class="card"><h3>Important note</h3><p class="muted">This practice page includes its questions and answer key in the public source code. It is not suitable for confidential or high-stakes examinations. Results are not centrally stored.</p></section>
+</main>
+<script>
+const startAt=new Date("2026-11-28T11:00:00+05:45").getTime();
+const Q=[
+["Scientific learning mainly relies on:",["Guesswork","Systematic investigation and evidence","Memorisation only","Personal belief"],1],
+["A scientific investigation usually begins with:",["Conclusion","A question or problem","Publication","Data analysis"],1],
+["A testable possible explanation is a:",["Hypothesis","Law","Result","Variable"],0],
+["The factor deliberately changed is the:",["Dependent variable","Independent variable","Constant","Conclusion"],1],
+["The factor measured in an experiment is the:",["Independent variable","Dependent variable","Hypothesis","Control"],1],
+["Why keep other factors constant?",["To make a fair test","To hide results","To avoid measuring","To change the outcome"],0],
+["Which instrument measures temperature?",["Balance","Thermometer","Stopwatch","Ruler"],1],
+["Which is a quantitative observation?",["The liquid is blue","The plant is 12 cm tall","It smells unusual","It looks rough"],1],
+["Which is a qualitative observation?",["Mass is 5 g","Time is 3 s","The solution is blue","Length is 4 cm"],2],
+["Why repeat measurements?",["Improve reliability","Hide errors","Change the hypothesis","Avoid data"],0],
+["A conclusion should be based on:",["Opinion","Evidence and data","A guess","Preference"],1],
+["If evidence does not support a hypothesis:",["Delete the data","Reconsider the hypothesis","Change the measurements","Ignore evidence"],1],
+["Which graph often shows change over time?",["Line graph","Map","Flowchart","Pie chart only"],0],
+["The SI unit of length is:",["Kilogram","Metre","Second","Kelvin"],1],
+["The SI unit of mass is:",["Newton","Metre","Kilogram","Litre"],2],
+["Which is a derived quantity?",["Mass","Time","Length","Speed"],3],
+["A control setup provides:",["A comparison","A guaranteed result","A replacement for data","A changed variable"],0],
+["Which is a safe lab practice?",["Taste chemicals","Follow instructions and use protection","Mix unknown chemicals","Smell directly"],1],
+["If a chemical splashes on skin, first:",["Ignore it","Tell the teacher and rinse with water","Apply another chemical","Continue"],1],
+["Scientific findings are communicated so others can:",["Check and build on them","Keep them secret","Avoid questions","Skip experiments"],0],
+["Which is a scientific attitude?",["Bias","Curiosity","Carelessness","Blind acceptance"],1],
+["A scientific theory is:",["An unsupported guess","An explanation strongly supported by evidence","A personal opinion","An untestable idea"],1],
+["A scientific law generally describes:",["A consistent pattern in nature","A safety rule","A guess","A personal belief"],0],
+["When studying light's effect on plants, an outcome to measure is:",["Plant height","Ruler type","Pot colour","The hypothesis"],0],
+["Which should be controlled in a plant-growth test?",["Plant species and water","The final height","The expected result","The measured outcome"],0],
+["Which tool measures a time interval?",["Stopwatch","Thermometer","Balance","Compass"],0],
+["A poorly calibrated instrument may cause:",["Instrumental error","A hypothesis","A conclusion","A constant"],0],
+["Why arrange data in a table?",["Make comparison easier","Hide results","Avoid measurements","Reduce accuracy"],0],
+["Which is an observation?",["The liquid turned green","The result should be high","The test is unfair","The theory is correct"],0],
+["A simplified investigation sequence is:",["Question, hypothesis, experiment, analysis, conclusion","Conclusion, question, guess, result","Experiment, conclusion, question, data","Result, guess, question, law"],0]
+];
+let answers=Array(30).fill(null),i=0,left=2700,clock=null,finished=false;
+const $=id=>document.getElementById(id);
+function tick(){let d=startAt-Date.now();if(d<=0){$("count").textContent="Test is open";$("status").textContent="You may begin now.";$("begin").disabled=false;return}let days=Math.floor(d/86400000),h=Math.floor(d%86400000/3600000),m=Math.floor(d%3600000/60000),s=Math.floor(d%60000/1000);$("count").textContent=days+"d "+h+"h "+m+"m "+s+"s"}
+tick();setInterval(tick,1000);
+function render(){$("number").textContent="Question "+(i+1)+" of 30";$("question").textContent=Q[i][0];$("options").innerHTML=Q[i][1].map((v,n)=>'<label><input type="radio" name="a" value="'+n+'" '+(answers[i]===n?"checked":"")+'> '+String.fromCharCode(65+n)+'. '+v+'</label>').join("");document.querySelectorAll('input[name="a"]').forEach(x=>x.onchange=()=>answers[i]=+x.value);$("prev").disabled=i===0;$("next").disabled=i===29}
+function finish(){if(finished)return;if(!confirm("Submit your answers?"))return;finished=true;clearInterval(clock);let score=answers.reduce((s,a,n)=>s+(a===Q[n][2]?1:0),0);$("test").classList.add("hide");$("result").classList.remove("hide");$("resultname").textContent="Student: "+($("student").value||"Student");$("score").textContent=score+" / 30";$("percent").textContent="Percentage: "+Math.round(score/30*100)+"%";$("review").innerHTML=Q.map((q,n)=>"<p><b>Q"+(n+1)+". "+q[0]+"</b><br>Your answer: "+(answers[n]===null?"Not answered":q[1][answers[n]])+"<br>Correct answer: "+q[1][q[2]]+"</p>").join("")}
+$("begin").onclick=()=>{if(Date.now()<startAt)return;$("start").classList.add("hide");$("test").classList.remove("hide");render();clock=setInterval(()=>{left--;$("timer").textContent=Math.floor(left/60)+":"+String(left%60).padStart(2,"0");if(left<=0){alert("Time is up. Your test will be submitted.");finish()}},1000)};
+$("prev").onclick=()=>{if(i>0){i--;render()}};$("next").onclick=()=>{if(i<29){i++;render()}};$("submit").onclick=finish;
+</script></body></html>
