@@ -1,0 +1,10 @@
+{
+  "name": "SEE 2083 Saturday Mock Test",
+  "short_name": "SEE 2083 Mock",
+  "description": "Weekly SEE 2083 mock tests",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f6fb",
+  "theme_color": "#14213d",
+  "icons": []
+}
